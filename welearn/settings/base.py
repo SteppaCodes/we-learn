@@ -35,10 +35,14 @@ LOCAL_APPS = [
 
 THIRD_PARTY_APPS = [
     'debug_toolbar',
+    'crispy_forms',
+    "crispy_bootstrap5"
 ]
 
 INSTALLED_APPS = DJANGO_APPS +LOCAL_APPS + THIRD_PARTY_APPS
 
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 AUTH_USER_MODEL = 'accounts.User'
 
