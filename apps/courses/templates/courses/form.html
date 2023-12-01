@@ -1,0 +1,30 @@
+{% extends "common/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="text-center">
+        <h1>
+            {% if object %}
+                Edit course "{{ object.title }}"
+            {% else %}
+                Create a new course
+            {% endif %}
+        </h1>
+    </div>
+
+    <div class="card shadow mx-auto" style="width: 70%;">
+        <div class="card-body">
+            <h2 class="card-title mb-4">Course info</h2>
+            <form method="post" class="form-horizontal">
+                {{ form|crispy }}
+                {% csrf_token %}
+                
+                <div class="form-group text-center mt-4">
+                    <input type="submit" class="btn btn-primary btn-block" value="Save course" style="padding: 15px;">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+
+
+<div class="container-fluid mt-4" style="padding-right: 20px; padding-left: 20px;">
+    <div class="d-flex justify-content-between align-items-center" style="background-color: #fd7e14; padding: 20px;">
+        <h2 class="text-left mb-0" style="color: white; width: 80%;">My Courses</h2>
+        <a href="{% url 'create-course' %}" ><button class="btn btn-orange btn-sm" style="background-color: white; border: 1px solid #fd7e14; color: #fd7e14; padding: 10px 20px; border-radius: 5px;">Create Course</button></a>
+    </div>
+    <br>
+    <h5>You own {{request.user.courses_owned.count}} courses</h5>
+    <br>
+    <div class="row">
+        {% for course in object_list %}
+            <div class="col-md-4 mb-4">
+                <div class="card" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                    <div class="card-body" style="transition: background-color 0.3s;">
+                        <h5 class="card-title font-weight-bold">{{ course.title }}</h5>
+                        <p class="card-text">Overview: {{ course.overview }}</p>
+                        <p class="card-text">Enrolled: 300k</p>
+                        <p class="card-text">Teacher: steppacodes</p>
+                        <p class="card-text">Price: $200</p>
+                        <!-- Add more information as needed -->
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .card-body:hover {
+        background-color: #f8f9fa; /* Change this color to your desired hover background color */
+    }
+</style>
+
+{% endblock content %}

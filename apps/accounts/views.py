@@ -33,8 +33,7 @@ class LoginView(View):
 
             user = authenticate(request, username=email, password=password)
             if not user:
-
-                return redirect('/')
+                print('Not a user')
             else:
                 login(request, user)
                 return redirect('home')

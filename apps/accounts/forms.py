@@ -1,14 +1,17 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from apps.accounts.models import User
+from .validators import validate_name
 
 class RegisterForm(UserCreationForm):
     first_name = forms.CharField(
         max_length=50,
+        validators=[validate_name],
         widget=forms.TextInput(attrs={"placeholder": "Enter Your first name"})
     )
     last_name = forms.CharField(
         max_length=50,
+        validators=[validate_name],
         widget=forms.TextInput(attrs={"placeholder":"Enter your last name"})
     )
     email = forms.EmailField(
