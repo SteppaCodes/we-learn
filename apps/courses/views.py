@@ -1,9 +1,12 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import (ListView, CreateView,
+                                   UpdateView, DeleteView)
+from django.views.generic.base import TemplateResponseMixin
 from .models import Course, Subject
 
-from .mixins import OwnerCourseMixin, OwnerEditMixin, OwnerCourseEditMixin
+from .mixins import OwnerCourseMixin, OwnerCourseEditMixin
+from .forms import ModelForm
 
 #TODO: cREATA A COURSE OBJECTIVES THAT STUDENTS WILL TICK IF THEY ARE ABLE TO MEET THE OBJECTIVES
 
@@ -37,3 +40,33 @@ class CourseDeleteView(OwnerCourseMixin, DeleteView):
 
 class CourseDetailView():
     pass
+
+
+class CourseModuleUpdateVIew(TemplateResponseMixin, View):
+    template_name = 'courses/modules/formset.html'
+    course=None
+
+    def get_formset(self,data=None):
+        return ModelForm(instance=self.course, data=data)
+    
+    def dispatch(self, request, pk) :
+        self.course = get_object_or_404(Course, id=pk, owner=request.user)
+        return super().dispatch(request, pk)
+
+    def get(self, request, *args, **Kwargs):
+        formset = self.get_formset()
+        return self.render_to_response({
+            'formset':formset,
+            'course': self.course
+        })
+
+    def post(self, request, *args, **Kwargs):
+        formset = self.get_formset(request.POST)
+        if formset.is_valid():
+            formset.save()
+            return redirect('mycourses')
+        return self.render_to_response({
+            'course':self.course,
+            'formset':formset
+        })
+        

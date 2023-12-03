@@ -54,7 +54,7 @@ class Content(BaseModel):
     } , on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     item = GenericForeignKey('content_type', 'object_id')
-    order = OrderField(blank=True,for_fields=['module'])
+    order = OrdeField(blank=True,for_fields=['module'])
 
     class Meta:
         ordering= ['order']
