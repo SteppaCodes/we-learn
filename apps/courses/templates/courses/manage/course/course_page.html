@@ -1,0 +1,90 @@
+{% extends 'common/base.html' %}
+{% load course %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <div class="row">
+        {% if course.modules.all %}
+        <!-- Side Navbar -->
+        <div class="col-md-2 bg-dark text-light" id="module" style="min-height: 100vh; width: 0.2;">
+            <h4 class="py-3 pl-4 text-light">Modules</h4>
+            {% for module in course.modules.all %}
+                <h6 class="pl-4 mb-3">
+                    <span class="text-muted" style="font-size: 15px;">Module {{ module.order|add:1 }}</span>
+                    <br>
+                    <a href="{% url 'module-detail' course.id module.id %}" class="text-light">
+                        {{ module.title }}
+                    </a>
+                    <br>
+                </h6>
+            {% endfor %}
+            <p><a href="">Edit Modules</a></p>
+        </div>
+        {% endif %}
+
+        <!-- Main Content -->
+        <div class="col-md-9">
+            {% if course.modules.all %}
+                <div class="container">
+                    {% for content in module.contents.all %}
+                        <div data-id="{{ content.id }}" class="mb-4">
+                            {% with item=content.item %}
+                                <p>{{item}} {{item|model_name}}</p>
+                                <a href="#" class="text-primary">Edit</a>
+                                <form method="post" class="d-inline">
+                                    <input type="submit" value="Delete">
+                                    {% csrf_token %}
+                                </form>
+                            {% endwith %}
+                        </div>
+                    {% empty %}
+                        <p>This module has no contents yet.</p>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>No modules available for this course.</p>
+            {% endif %}
+            <h3>Add new content:</h3>
+            <ul class="content-types">
+                <li><a href="{% url 'content_create_update' module.id  item|model_name  %}">Text</a></li>
+                <li><a href="{% url 'content_create_update' module.id  item|model_name  %}">Image</a></li>
+                <li><a href="{% url 'content_create_update' module.id  item|model_name  %}">Video</a></li>
+                <li><a href="{% url 'content_create_update' module.id  item|model_name  %}">File</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block include_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html5sortable/0.13.3/html5sortable.min.js"></script>
+{% endblock %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) =>{
+        var options = {
+    method: 'POST',
+    mode: 'same-origin'
+    }
+    const moduleOrderUrl = '{% url "module_order" %}';
+
+    sortable('#modules', {
+        forcePlaceholderSize: true,
+        placeholderClass: 'placeholder'
+        });
+    });
+</script>
+<!-- {% block domready %}
+    var options = {
+    method: 'POST',
+    mode: 'same-origin'
+    }
+    const moduleOrderUrl = '{% url "module_order" %}';
+
+    sortable('#modules', {
+        forcePlaceholderSize: true,
+        placeholderClass: 'placeholder'
+        });
+{% endblock %} -->
+
+

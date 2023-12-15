@@ -189,3 +189,14 @@
 
 <!-- Template Javascript -->
 <script src="{% static 'js/min.js' %}"></script>
+{% block include_js %}
+ {% endblock %}
+ <!-- <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        // DOM loaded
+        {% block domready %}
+            // Your JavaScript code goes here
+            console.log('DOM is ready!')
+        {% endblock %}
+    });
+</script> -->

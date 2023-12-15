@@ -26,6 +26,6 @@ class OwnerCourseMixin(OwnerMixin):
 
 
 class OwnerCourseEditMixin(OwnerCourseMixin, OwnerEditMixin, LoginRequiredMixin, PermissionRequiredMixin):
-    template_name = 'courses/form.html'
+    template_name = 'courses/manage/course/form.html'
 
 

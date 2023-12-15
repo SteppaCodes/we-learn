@@ -14,7 +14,7 @@
     <div class="row">
         {% for course in object_list %}
             <div class="col-md-4 mb-4">
-                <div class="card" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+               <div class="card" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                     <div class="card-body" style="transition: background-color 0.3s;">
                         <h5 class="card-title font-weight-bold">{{ course.title }}</h5>
                         <p class="card-text">Overview: {{ course.overview }}</p>
@@ -22,9 +22,10 @@
                         <p class="card-text">Teacher: steppacodes</p>
                         <p class="card-text">Price: $200</p>
                         <p class="card-text"><a href="{% url 'course_module_update' course.id %}">Edit Modules</a></p>
+                        <p class="card-text"><a href="{% url 'course-detail' course.id %}">view</a></p>
                         <!-- Add more information as needed -->
                     </div>
-                </div>
+                </div></a>
             </div>
         {% endfor %}
     </div>
